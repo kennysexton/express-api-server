@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
+require('dotenv/config');
 
 
 var fs = require('fs');
@@ -44,10 +45,10 @@ router.post('/adduser', (req, res) => {
 });
 
 mongoose.connect(
-    'mongodb+srv://Admin:g9HdJgWF2bBeOx3y@bracketapi.biekg.mongodb.net/test',
+    process.env.DB_CONNECTION,
     { useNewUrlParser: true, useUnifiedTopology: true },
     () => {
-        console.log("connected to DB")
+        console.log("connected to DB!")
     })
 
 module.exports = router;
