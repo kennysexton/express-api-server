@@ -1,0 +1,15 @@
+{
+  "name": "vercel-api-hosting",
+  "version": "1.0.0",
+  "description": "Creating a hosted API endpoint using express",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "keywords": [],
+  "author": "Kenny Sexton",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
