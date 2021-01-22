@@ -1,72 +1,67 @@
 const express = require('express');
 const router = express.Router();
-const mongoose = require('mongoose');
+const User = require('../models/User')
 require('dotenv/config');
 
 
-var fs = require('fs');
-
-var users = [];
-
-try {
-    data = fs.readFileSync('data/users.json');
-    users = JSON.parse(data)
-    console.log(users);
-} catch (e) {
-    console.error(e.stack);
-}
-
-router.get('/', (_, res) => {
-    res.send('Your Express App');
-});
+// router.get('/', (_, res) => {
+//     res.send('Your Express App');
+// });
 
 // Get Users
-router.get('/users', (_, res) => {
-    res.json({ ok: true, users });
-});
-
-router.get('/user/:name', (req, res) => {
-    const { name } = req.params;
-    const user = users.filter((user) => user.name === name)[0];
-    res.json({ ok: true, user });
-});
-
-router.post('/adduser', (req, res) => {
-    console.log("Made it to post")
-    const { name, picks } = req.body
-    if (name && picks) {
-        users.push({ name, picks });
-        res.json({ ok: true, users });
-        writeToJSONFile(users)
-    } else {
-        var msg = "Required parameters not complete";
-        res.json({ ok: false, msg: msg })
+router.get('/', async (_, res) => {
+    try {
+        const users = await User.find()
+        res.json(users)
+    } catch (err) {
+        res.json({ message: err });
     }
 });
 
-mongoose.connect(
-    process.env.DB_CONNECTION,
-    { useNewUrlParser: true, useUnifiedTopology: true },
-    () => {
-        console.log("connected to DB!")
-    })
+// Submit a user
+router.post('/', async (req, res) => {
+    console.log("Made it to post")
+    const user = new User({
+        name: req.body.name,
+        picks: req.body.picks
+    });
+    try {
+        const savedUser = await user.save()
+        res.json(savedUser)
+    } catch (err) {
+        res.json({ message: err });
+    }
+});
+
+router.get('/:userId', async (req, res) => {
+    try {
+        const user = await User.findById(req.params.userId)
+        res.json(user)
+    } catch (err) {
+        res.json({ message: err });
+    }
+});
+
+// Delete
+router.delete('/:userId', async (req, res) => {
+    try {
+        const removedUser = await User.remove({ _id: req.params.userId });
+        res.json(removedUser);
+    } catch (err) {
+        res.json({ message: err });
+    }
+});
+
+// Update
+router.patch('/:userId', async (req, res) => {
+    try {
+        const updatedUser = await User.updateOne(
+            { _id: req.params.userId },
+            { $set: { name: req.body.name } })
+        res.json(updatedUser)
+    } catch (err) {
+        res.json({ message: err });
+    }
+})
 
 module.exports = router;
-
-function writeToJSONFile(result) {
-
-    fs.readFile('data/users.json', 'utf8', function readFileCallback(err, data) {
-        if (err) {
-            console.log(err);
-        } else {
-            console.log("length:" + data.length)
-            if (data.length == 0) {
-                console.log("emplty data ")
-            }
-            json = JSON.stringify(users); //convert it back to json
-            fs.writeFile('data/users.json', json, 'utf8', (err) => {
-                if (err) throw err;
-            });
-        }
-    });
-}
