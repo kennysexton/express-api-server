@@ -4,10 +4,6 @@ const User = require('../models/User')
 require('dotenv/config');
 
 
-// router.get('/', (_, res) => {
-//     res.send('Your Express App');
-// });
-
 // Get Users
 router.get('/', async (_, res) => {
     try {

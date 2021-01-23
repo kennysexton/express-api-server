@@ -14,6 +14,10 @@ app.use(bodyParser.json());
 // Import routes
 app.use('/users', require('./routes/users'));
 
+app.get('/', (_, res) => {
+    res.send('Sport Bracket Maker API endpoint');
+});
+
 mongoose.connect(
     process.env.DB_CONNECTION,
     { useNewUrlParser: true, useUnifiedTopology: true },
