@@ -2,10 +2,10 @@ const mongoose = require('mongoose');
 
 const ResultSchema = mongoose.Schema({
     afcTeams: {
-        type: Array[String],
+        type: Array,
     },
     nfcTeams: {
-        type: Array[String],
+        type: Array,
     },
     games: {
         type: String,
