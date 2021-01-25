@@ -15,17 +15,14 @@ router.get('/', async (_, res) => {
 });
 
 // Update results
-router.post('/', async (req, res) => {
-    console.log("Made it to results post")
-    const result = new Result({
-        games: req.body.games,
-    });
+router.patch('/', async (req, res) => {
     try {
-        const savedResult = await result.save()
-        res.json(savedResult)
+        const updatedResult = await Result.updateOne(
+            { $set: { games: req.body.games } })
+        res.json(updatedResult)
     } catch (err) {
         res.json({ message: err });
     }
-});
+})
 
 module.exports = router;
