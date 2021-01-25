@@ -9,6 +9,18 @@ const UserSchema = mongoose.Schema({
         type: String,
         required: true
     },
+    wins: {
+        type: Number,
+        default: 0
+    },
+    loses: {
+        type: Number,
+        default: 0
+    },
+    total: {
+        type: Number,
+        default: 0
+    },
     date: {
         type: Date,
         default: Date.now
