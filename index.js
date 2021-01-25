@@ -13,6 +13,7 @@ app.use(bodyParser.json());
 
 // Import routes
 app.use('/users', require('./routes/users'));
+app.use('/results', require('./routes/results'));
 
 app.get('/', (_, res) => {
     res.send('Sport Bracket Maker API endpoint');
