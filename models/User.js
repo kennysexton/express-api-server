@@ -21,10 +21,14 @@ const UserSchema = mongoose.Schema({
         type: Number,
         default: 0
     },
+    style: {
+        type: Array,
+    },
     date: {
         type: Date,
         default: Date.now
     }
+
 })
 
 module.exports = mongoose.model('Users', UserSchema)

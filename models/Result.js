@@ -9,6 +9,7 @@ const ResultSchema = mongoose.Schema({
     },
     games: {
         type: String,
+        min: 8,
         required: true
     }
 })
