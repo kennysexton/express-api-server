@@ -5,17 +5,22 @@ require('dotenv/config');
 
 // Get Users
 router.get('/', async (req, res) => {
-    try {
-        if(req.query.sort){ // If sort parameter is given
-            const users = await User.find().sort( { wins: req.query.sort } )
-            res.json(users)
-        } else { // no sort
-            const users = await User.find()
-            res.json(users)
+    console.log('Get before wait,');
+    setTimeout(async function() {
+        console.log('after wait');
+        try {
+            if(req.query.sort){ // If sort parameter is given
+                const users = await User.find().sort( { wins: req.query.sort } )
+                res.json(users)
+            } else { // no sort
+                const users = await User.find()
+                res.json(users)
+            }
+        } catch (err) {
+            res.json({ message: err });
         }
-    } catch (err) {
-        res.json({ message: err });
-    }
+    }, 5000);
+
 });
 
 // Get Users (sorted)
