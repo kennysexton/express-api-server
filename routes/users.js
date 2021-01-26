@@ -14,6 +14,16 @@ router.get('/', async (_, res) => {
     }
 });
 
+// Get Users
+router.get('/sort', async (_, res) => {
+    try {
+        const users = await User.find().sort( { wins: -1 } )
+        res.json(users)
+    } catch (err) {
+        res.json({ message: err });
+    }
+});
+
 // Submit a user
 router.post('/', async (req, res) => {
     console.log("Made it to post")
