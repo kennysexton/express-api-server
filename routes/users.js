@@ -4,10 +4,15 @@ const User = require('../models/User')
 require('dotenv/config');
 
 // Get Users
-router.get('/', async (_, res) => {
+router.get('/', async (req, res) => {
     try {
-        const users = await User.find()
-        res.json(users)
+        if(req.query.sort){ // If sort parameter is given
+            const users = await User.find().sort( { wins: req.query.sort } )
+            res.json(users)
+        } else { // no sort
+            const users = await User.find()
+            res.json(users)
+        }
     } catch (err) {
         res.json({ message: err });
     }
