@@ -3,7 +3,6 @@ const router = express.Router();
 const User = require('../models/User')
 require('dotenv/config');
 
-
 // Get Users
 router.get('/', async (_, res) => {
     try {
@@ -14,7 +13,7 @@ router.get('/', async (_, res) => {
     }
 });
 
-// Get Users
+// Get Users (sorted)
 router.get('/sort', async (_, res) => {
     try {
         const users = await User.find().sort( { wins: -1 } )
