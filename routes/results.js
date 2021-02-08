@@ -63,7 +63,7 @@ async function updatePlayerScore(users, newResult) {
                             style[i] = 1
                         } else {
                             wrong++;
-                            style[i] += 2
+                            style[i] = 2
                         }
                     }
                     else if (userPick[i] == newResult[i]) {
