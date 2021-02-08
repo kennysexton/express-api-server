@@ -47,7 +47,7 @@ async function updatePlayerScore(users, newResult) {
         var correct = 0;
         var wrong = 0;
         var total = 0;
-        var style = [] // 1 correct, 0 wrong
+        var style = [] // 1 correct, 2 wrong
 
         userPick = user.picks
 
