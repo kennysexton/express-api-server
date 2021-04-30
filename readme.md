@@ -2,7 +2,7 @@
 ![Heroku](https://heroku-badge.herokuapp.com/?app=express-api-app)
 
 ## What is it
-A REST API, build using Express & Node. 
+A REST API, built using Express & Node. 
 
 ## Hosting
 The app is hosted using [Heroku](https://express-api-app.herokuapp.com/).  This allows the server instance to stay up and running for free!
