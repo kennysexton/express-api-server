@@ -5,11 +5,20 @@ require('dotenv/config');
 
 // Get Users
 router.get('/', async (req, res) => {
+
+    // change get request based on query
+    let league = req.query.league;
+    let year = req.query.year;
+    let sort = req.query.sort
+
     try {
-        if (req.query.sort) { // If sort parameter is given
-            const users = await User.find().sort({ wins: req.query.sort })
+        if (sort) { // If sort parameter is given
+            const users = await User.find().sort({ wins: sort })
             res.json(users)
-        } else { // no sort
+        } else if (req.query.league && req.query.year) {
+            const users = await User.find({ league: league, year: year }).exec();
+            res.json(users)
+        }else { // no sort, all leagues
             const users = await User.find()
             res.json(users)
         }
