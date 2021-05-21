@@ -27,6 +27,14 @@ const UserSchema = mongoose.Schema({
     date: {
         type: Date,
         default: Date.now
+    },
+    league: {
+        type: String,
+        required: true
+    },
+    year: {
+        type: Number,
+        required: true,
     }
 
 })
