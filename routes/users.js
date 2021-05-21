@@ -16,9 +16,11 @@ router.get('/', async (req, res) => {
             const users = await User.find().sort({ wins: sort })
             res.json(users)
         } else if (req.query.league && req.query.year) {
+            console.log(`getting users for ${league} in ${year}`)
             const users = await User.find({ league: league, year: year }).exec();
             res.json(users)
         }else { // no sort, all leagues
+            console.log("getting every user")
             const users = await User.find()
             res.json(users)
         }
