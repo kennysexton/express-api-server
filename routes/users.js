@@ -30,12 +30,12 @@ router.get('/sort', async (_, res) => {
 
 // Submit a user
 router.post('/', async (req, res) => {
-    console.log(`Made it to post:  ${req.body}`)
+    console.log(`Made it to post w/ name: ${req.body.name}`)
     const user = new User({
         name: req.body.name,
         picks: req.body.picks,
         league: req.body.league,
-        year: req.body.year
+        year: parseInt(req.body.year)
     });
     try {
         const savedUser = await user.save()
