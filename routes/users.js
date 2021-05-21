@@ -34,7 +34,7 @@ router.post('/', async (req, res) => {
     const user = new User({
         name: req.body.name,
         picks: req.body.picks,
-        league: req.body.leaque,
+        league: req.body.league,
         year: req.body.year
     });
     try {
