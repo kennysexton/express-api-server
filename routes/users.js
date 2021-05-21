@@ -33,7 +33,9 @@ router.post('/', async (req, res) => {
     console.log("Made it to post")
     const user = new User({
         name: req.body.name,
-        picks: req.body.picks
+        picks: req.body.picks,
+        league: req.body.leaque,
+        year: req.body.year
     });
     try {
         const savedUser = await user.save()
