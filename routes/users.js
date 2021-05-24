@@ -13,13 +13,13 @@ router.get('/', async (req, res) => {
 
     try {
         if (sort) { // If sort parameter is given
-            const users = await User.find().sort({ wins: sort })
+            const users = await User.find(({ league: league, year: year })).sort({ wins: sort })
             res.json(users)
         } else if (req.query.league && req.query.year) {
             console.log(`getting users for ${league} in ${year}`)
             const users = await User.find({ league: league, year: year }).exec();
             res.json(users)
-        }else { // no sort, all leagues
+        } else { // no sort, all leagues
             console.log("getting every user")
             const users = await User.find()
             res.json(users)
@@ -41,17 +41,18 @@ router.get('/sort', async (_, res) => {
 
 // Submit a user
 router.post('/', async (req, res) => {
-    console.log(`Made it to post w/ name: ${req.body.name}`)
-    const user = new User({
-        name: req.body.name,
-        picks: req.body.picks,
-        league: req.body.league,
-        year: parseInt(req.body.year)
-    });
     try {
+        console.log(`Made it to post w/ name: ${req.body.name} | ${req.body.picks} | ${req.body.league} | ${req.body.year}`)
+        const user = new User({
+            name: req.body.name,
+            picks: req.body.picks,
+            league: req.body.league,
+            year: parseInt(req.body.year)
+        });
         const savedUser = await user.save()
         res.json(savedUser)
     } catch (err) {
+        console.error("did not successfully post")
         res.json({ message: err });
     }
 });
