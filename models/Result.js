@@ -1,11 +1,20 @@
 const mongoose = require('mongoose');
 
 const ResultSchema = mongoose.Schema({
-    afcTeams: {
-        type: Array,
+    NFL: {
+        2020: {
+            type: String
+        },
     },
-    nfcTeams: {
-        type: Array,
+    NBA: {
+        2021: {
+            type: String
+        },
+    },
+    NHL: {
+        2021: {
+            type: String
+        },
     },
     games: {
         type: String,

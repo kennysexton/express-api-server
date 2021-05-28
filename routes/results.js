@@ -14,18 +14,26 @@ router.get('/', async (_, res) => {
     }
 });
 
-// Update results
-router.patch('/', async (req, res) => {
+// Update NHL results
+router.patch('/nhl', async (req, res) => {
     console.log("patch sent!")
     try {
-        newResult = req.body.games
-        const updatedResult = await Result.updateOne(
-            { $set: { games: newResult } })
+        console.log(`${JSON.stringify(req.body)}`)
+        newResult = req.body
 
-        const users = await User.find()
+        // Get the year included in the patch
+        year = Object.keys(newResult)[0]
+        picks = Object.values(newResult)[0]
+
+        console.log(`Extracted year: ${year}`)
+        const updatedResult = await Result.updateOne(
+            { $set: { NHL: newResult } })
+
+        const users = await User.find({ league: "NHL", year: year }).exec()
+        console.log(`making updates to users: ${users}`)
 
         // update players score on new result updated
-        await updatePlayerScore(users, newResult)
+        await updatePlayerScore(users, picks)
 
         res.json(updatedResult)
     } catch (err) {
@@ -37,11 +45,14 @@ module.exports = router;
 
 // Loop through users and update their wins,loses, total
 async function updatePlayerScore(users, newResult) {
-    if (newResult.length == 8) {
-        winnerDivision = newResult[7]
+    if (newResult.length >= 8) {
+        // Last element
+        winnerDivision = newResult[newResult.length - 1]
     } else {
-        throw ("newResult is not the expected length (" + newResult.length + ")")
+        throw (`newResult is not the expected length ${newResult.length}`)
     }
+
+    var middleElement = Math.floor((newResult.length - 1) / 2)
 
     await users.forEach(async function (user) {
         var correct = 0;
@@ -53,12 +64,11 @@ async function updatePlayerScore(users, newResult) {
 
         // User.picks must be in the same format as result
         if (userPick.length == newResult.length) {
-            console.log(userPick)
             // Loop through characters of user.picks
             for (var i = 0; i < userPick.length - 1; i++) {
                 if (newResult[i] != 0) { // If zero - game has not been played
-                    if (i == 3) { //super bowl
-                        if (userPick[7] == winnerDivision && userPick[i] == newResult[i]) {
+                    if (i == middleElement) { //super bowl
+                        if (userPick[userpick.length - 1] == winnerDivision && userPick[i] == newResult[i]) {
                             correct++;
                             style[i] = 1
                         } else {
@@ -77,7 +87,7 @@ async function updatePlayerScore(users, newResult) {
                 } else { style[i] = 0 }
             }
         } else {
-            console.error("User picks (" + user.picks.length + ") did not have the same lenght as result (" + newResult.length + "),  cannot grade for User: " + user.name)
+            throw ("User picks (" + user.picks.length + ") did not have the same lenght as result (" + newResult.length + "),  cannot grade for User: " + user.name)
         }
         // console.log(user.name + ":" + correct + "-" + wrong + "-" + total + " | " + style)
         await User.updateOne(
