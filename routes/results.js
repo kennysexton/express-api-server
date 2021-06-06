@@ -41,6 +41,33 @@ router.patch('/nhl', async (req, res) => {
     }
 })
 
+// Update NBA results
+router.patch('/nba', async (req, res) => {
+    console.log("patch sent!")
+    try {
+        console.log(`${JSON.stringify(req.body)}`)
+        newResult = req.body
+
+        // Get the year included in the patch
+        year = Object.keys(newResult)[0]
+        picks = Object.values(newResult)[0]
+
+        console.log(`Extracted year: ${year}`)
+        const updatedResult = await Result.updateOne(
+            { $set: { NBA: newResult } })
+
+        const users = await User.find({ league: "NBA", year: year }).exec()
+        console.log(`making updates to users: ${users}`)
+
+        // update players score on new result updated
+        await updatePlayerScore(users, picks)
+
+        res.json(updatedResult)
+    } catch (err) {
+        res.json({ message: err });
+    }
+})
+
 module.exports = router;
 
 // Loop through users and update their wins,loses, total
