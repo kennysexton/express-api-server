@@ -95,7 +95,7 @@ async function updatePlayerScore(users, newResult) {
             for (var i = 0; i < userPick.length - 1; i++) {
                 if (newResult[i] != 0) { // If zero - game has not been played
                     if (i == middleElement) { //super bowl
-                        if (userPick[userpick.length - 1] == winnerDivision && userPick[i] == newResult[i]) {
+                        if (userPick[userPick.length - 1] == winnerDivision && userPick[i] == newResult[i]) {
                             correct++;
                             style[i] = 1
                         } else {
