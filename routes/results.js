@@ -15,7 +15,7 @@ router.get('/', async (_, res) => {
 });
 
 // Update NFL results
-router.put('/nfl', async (req, res) => {
+router.patch('/nfl', async (req, res) => {
     console.log("patch sent!")
     try {
         console.log(`${JSON.stringify(req.body)}`)
@@ -29,8 +29,8 @@ router.put('/nfl', async (req, res) => {
         const updatedResult = await Result.updateOne(
             { $set: { NFL: newResult } })
 
-        const users = await User.find({ league: "NFL", year: year }).exec()
-        console.log(`making updates to users: ${users}`)
+        // const users = await User.find({ league: "NFL", year: year }).exec()
+        // console.log(`making updates to users: ${users}`)
 
         // update players score on new result updated
         // await updatePlayerScore(users, picks)
