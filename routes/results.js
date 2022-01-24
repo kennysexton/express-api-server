@@ -22,8 +22,8 @@ router.patch('/nfl', async (req, res) => {
         newResult = req.body
 
         // Get the year included in the patch
-        year = Object.keys(newResult).pop();
-        picks = Object.values(newResult).pop();
+        year = Object.keys(newResult).pop()
+        picks = Object.values(newResult).pop()
 
         console.log(`Extracted year: ${year}`)
         const updatedResult = await Result.updateOne(
@@ -49,8 +49,8 @@ router.patch('/nhl', async (req, res) => {
         newResult = req.body
 
         // Get the year included in the patch
-        year = Object.keys(newResult)[0]
-        picks = Object.values(newResult)[0]
+        year = Object.keys(newResult).pop()
+        picks = Object.values(newResult).pop()
 
         console.log(`Extracted year: ${year}`)
         const updatedResult = await Result.updateOne(
@@ -76,8 +76,8 @@ router.patch('/nba', async (req, res) => {
         newResult = req.body
 
         // Get the year included in the patch
-        year = Object.keys(newResult)[0]
-        picks = Object.values(newResult)[0]
+        year = Object.keys(newResult).pop()
+        picks = Object.values(newResult).pop()
 
         console.log(`Extracted year: ${year}`)
         const updatedResult = await Result.updateOne(
