@@ -22,9 +22,8 @@ router.put('/nfl', async (req, res) => {
         newResult = req.body
 
         // Get the year included in the patch
-        console.log(Object.keys(newResult))
-        year = Object.keys(newResult)[0]
-        picks = Object.values(newResult)[0]
+        year = Object.keys(newResult).pop();
+        picks = Object.values(newResult).pop();
 
         console.log(`Extracted year: ${year}`)
         const updatedResult = await Result.updateOne(
@@ -34,7 +33,7 @@ router.put('/nfl', async (req, res) => {
         console.log(`making updates to users: ${users}`)
 
         // update players score on new result updated
-        await updatePlayerScore(users, picks)
+        // await updatePlayerScore(users, picks)
 
         res.json(updatedResult)
     } catch (err) {
