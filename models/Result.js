@@ -2,7 +2,10 @@ const mongoose = require('mongoose');
 
 const ResultSchema = mongoose.Schema({
     NFL: {
-        2020: {
+        2021: {
+            type: String
+        },
+        2022: {
             type: String
         },
     },
