@@ -1,24 +1,9 @@
 const mongoose = require('mongoose');
 
 const ResultSchema = mongoose.Schema({
-    NFL: {
-        2021: {
-            type: String
-        },
-        2022: {
-            type: String
-        },
-    },
-    NBA: {
-        2021: {
-            type: String
-        },
-    },
-    NHL: {
-        2021: {
-            type: String
-        },
-    },
+    NFL: {},
+    NBA: {},
+    NHL: {},
 })
 
 module.exports = mongoose.model('Results', ResultSchema)
