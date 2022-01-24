@@ -99,7 +99,7 @@ async function patchRequest(league, req){
 
     console.log(`Extracted year: ${year}`)
     const updatedResult = await Result.updateOne(
-        { $set: { [league]: newResult } })
+        { $set: { NFL: newResult } })
 }
 
 // Loop through users and update their wins,loses, total
