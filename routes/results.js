@@ -14,6 +14,24 @@ router.get('/', async (_, res) => {
     }
 });
 
+// Update NFL results
+router.patch('/nfl', async (req, res) => {
+    console.log("patch sent!")
+    try {
+        patchRequest("NFL", req);
+
+        const users = await User.find({ league: "NFL", year: year }).exec()
+        console.log(`making updates to users: ${users}`)
+
+        // update players score on new result updated
+        await updatePlayerScore(users, picks)
+
+        res.json(updatedResult)
+    } catch (err) {
+        res.json({ message: err });
+    }
+})
+
 // Update NHL results
 router.patch('/nhl', async (req, res) => {
     console.log("patch sent!")
@@ -69,6 +87,20 @@ router.patch('/nba', async (req, res) => {
 })
 
 module.exports = router;
+
+// Updates the corresponding mongoDB document
+async function patchRequest(league, req){
+    console.log(`${JSON.stringify(req.body)}`)
+    newResult = req.body
+
+    // Get the year included in the patch
+    year = Object.keys(newResult)[0]
+    picks = Object.values(newResult)[0]
+
+    console.log(`Extracted year: ${year}`)
+    const updatedResult = await Result.updateOne(
+        { $set: { [league]: newResult } })
+}
 
 // Loop through users and update their wins,loses, total
 async function updatePlayerScore(users, newResult) {
