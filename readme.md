@@ -1,5 +1,4 @@
 # Express API Server
-![Heroku](https://heroku-badge.herokuapp.com/?app=express-api-app)
 
 ## What is it
 A REST API, built using Express & Node. 
